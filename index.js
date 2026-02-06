@@ -7,7 +7,7 @@ const client = new Client({
 
 const WEBSITE_URL = 'https://viper-development-1.gitbook.io/viper-development-docs/'; 
 const STORE_URL = 'https://viper-development.tebex.io/';
-const CHANNEL_ID = '1469318831112716320'; 
+const CHANNEL_ID = process.env.CHANNEL_ID;
 let statusMessage = null; 
 
 client.once('ready', async () => {
