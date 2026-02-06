@@ -5,38 +5,48 @@ const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] 
 });
 
-const WEBSITE_URL = 'https://viper-development-1.gitbook.io/viper-development-docs/'; 
+const DOCS_URL = 'https://viper-development-1.gitbook.io/viper-development-docs/';
+const TEBEX_URL = 'https://your-tebex-store.com'; // 🟢 CHANGE THIS TO YOUR TEBEX LINK
 const CHANNEL_ID = '1469318831112716320'; 
-let statusMessage = null; // Stores the message so we can edit it
+let statusMessage = null;
 
 client.once('ready', async () => {
-    console.log(`✅ Monitoring: ${WEBSITE_URL}`);
+    console.log(`✅ Monitoring started for Docs and Tebex`);
     const channel = await client.channels.fetch(CHANNEL_ID);
 
     setInterval(async () => {
-        let isOnline = false;
-        try {
-            const res = await axios.get(WEBSITE_URL);
-            if (res.status === 200) isOnline = true;
-        } catch (e) { isOnline = false; }
+        // Check Docs Status
+        let docsOnline = false;
+        try { const res = await axios.get(DOCS_URL); if (res.status === 200) docsOnline = true; } catch (e) { docsOnline = false; }
+
+        // Check Tebex Status
+        let tebexOnline = false;
+        try { const res = await axios.get(TEBEX_URL); if (res.status === 200) tebexOnline = true; } catch (e) { tebexOnline = false; }
 
         const statusEmbed = new EmbedBuilder()
-            .setTitle('Website Status')
-            .setDescription(isOnline ? '🟢 **Online**\n`IIIIIIIIIIIIIIIIIIII` 100%' : '🔴 **Offline**')
-            .setColor(isOnline ? 0x2f3136 : 0xff0000) // Professional dark grey or red
-            .setFooter({ text: 'Last Updated' })
+            .setTitle('Viper Development | System Status')
+            .setColor(docsOnline && tebexOnline ? 0x2b2d31 : 0xff0000)
+            .addFields(
+                { 
+                    name: '📚 Documentation', 
+                    value: `${docsOnline ? '🟢 **Operational**' : '🔴 **Offline**'}\n[View Site](${DOCS_URL})`, 
+                    inline: true 
+                },
+                { 
+                    name: '🛒 Tebex Store', 
+                    value: `${tebexOnline ? '🟢 **Operational**' : '🔴 **Offline**'}\n[View Shop](${TEBEX_URL})`, 
+                    inline: true 
+                }
+            )
+            .setFooter({ text: 'Status updates every minute' })
             .setTimestamp();
 
         if (!statusMessage) {
-            // First time: send a new message
             statusMessage = await channel.send({ embeds: [statusEmbed] });
         } else {
-            // Every time after: just EDIT the message
-            await statusMessage.edit({ embeds: [statusEmbed] }).catch(() => {
-                statusMessage = null; // Reset if message was deleted
-            });
+            await statusMessage.edit({ embeds: [statusEmbed] }).catch(() => { statusMessage = null; });
         }
-    }, 60000); // 60,000ms = 1 Minute
+    }, 60000); 
 });
 
 client.login(process.env.DISCORD_TOKEN);
