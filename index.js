@@ -40,11 +40,10 @@ client.once('ready', async () => {
 
         const statusEmbed = new EmbedBuilder()
             .setTitle('# VIPER DEVELOPMENT')
-            .setDescription(`**APP**\n${formattedTime}\n\n---\n\n`)
             .addFields(
                 { 
                     name: '**VIPER DEVELOPMENT**', 
-                    value: '**Viper Development** - The ultimate development experience! 🎉 Dive into a world of custom documentation 🏷, exclusive resources 🛒, unique tools 📜, and an active development team 🚀 ensuring top-tier services. Start strong with our starter resources 🎁 and make your mark in development! 💪 Join now and BEAT THE ODDS! 😊\n\n---\n\n', 
+                    value: 'The ultimate development experience! 🎉 Dive into a world of custom documentation 🏷, exclusive resources 🛒, unique tools 📜, and an active development team 🚀 ensuring top-tier services. Start strong with our starter resources 🎁 and make your mark in development! 💪 Join now and BEAT THE ODDS! 😊', 
                     inline: false 
                 },
                 { 
