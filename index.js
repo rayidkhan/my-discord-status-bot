@@ -11,7 +11,7 @@ const CHANNEL_ID = '1469318831112716320';
 let statusMessage = null; 
 
 client.once('ready', async () => {
-    console.log(`✅ Monitoring: ${WEBSITE_URL}`);
+    console.log(`✅ Viper Status Monitor Active`);
     const channel = await client.channels.fetch(CHANNEL_ID);
 
     setInterval(async () => {
@@ -29,13 +29,25 @@ client.once('ready', async () => {
         } catch (e) { storeOnline = false; }
 
         const statusEmbed = new EmbedBuilder()
-            .setTitle('Viper Development | System Status')
+            .setTitle('🔷 VIPER DEVELOPMENT STATUS')
+            .setDescription('**Live System Monitoring**')
             .addFields(
-                { name: '📚 Documentation', value: `${websiteOnline ? '🟢 Operational' : '🔴 Offline'}\n[View Site](${WEBSITE_URL})`, inline: true },
-                { name: '🛒 Tebex Store', value: `${storeOnline ? '🟢 Operational' : '🔴 Offline'}\n[View Shop](${STORE_URL})`, inline: true }
+                { 
+                    name: '**📖 DOCUMENTATION**', 
+                    value: `${websiteOnline ? '✅ **OPERATIONAL**' : '❌ **OFFLINE**'}\n\n🔗 [Visit Site](${WEBSITE_URL})\n\n`, 
+                    inline: true 
+                },
+                { 
+                    name: '**🛒 TEBEX STORE**', 
+                    value: `${storeOnline ? '✅ **OPERATIONAL**' : '❌ **OFFLINE**'}\n\n🔗 [Visit Shop](${STORE_URL})\n\n`, 
+                    inline: true 
+                }
             )
-            .setColor(0x2f3136) 
-            .setFooter({ text: 'Status updates every minute' })
+            .setColor(websiteOnline && storeOnline ? 0x00FF00 : 0xFF0000) // Green if all up, Red if any down
+            .setThumbnail('https://i.imgur.com/your-logo-url.png') // Add your logo URL here
+            .setFooter({ 
+                text: '🔄 Status updates every 60 seconds • Viper Development' 
+            })
             .setTimestamp();
 
         if (!statusMessage) {
@@ -45,7 +57,7 @@ client.once('ready', async () => {
                 statusMessage = null; 
             });
         }
-    }, 60000); // 60,000ms = 1 Minute
+    }, 60000);
 });
 
 client.login(process.env.DISCORD_TOKEN);
