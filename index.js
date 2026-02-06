@@ -43,12 +43,12 @@ client.once('ready', async () => {
             .setDescription('**Just code that works**')
             .addFields(
                 { 
-                    name: '> DOCUMENTATION', 
+                    name: '> Docs', 
                     value: `${websiteOnline ? '```🟢 Operational```' : '```🔴 Offline```'}\n[View Site](${WEBSITE_URL})\n\n`, 
                     inline: true 
                 },
                 { 
-                    name: '> TEBEX STORE', 
+                    name: '> Tebex', 
                     value: `${storeOnline ? '```🟢 Operational```' : '```🔴 Offline```'}\n[View Shop](${STORE_URL})\n\n`, 
                     inline: true 
                 }
@@ -68,7 +68,7 @@ client.once('ready', async () => {
                             {
                                 type: 2,
                                 style: 5,
-                                label: 'Documentation',
+                                label: 'Docs',
                                 url: WEBSITE_URL,
                                 emoji: '📖'
                             },
