@@ -48,11 +48,6 @@ client.once('ready', async () => {
                     inline: false 
                 },
                 { 
-                    name: '**STATUS**', 
-                    value: `${websiteOnline && storeOnline ? '✅ **Online**' : '❌ **Offline**'}\n\n`, 
-                    inline: true 
-                },
-                { 
                     name: '**DOCUMENTATION**', 
                     value: `${websiteOnline ? '✅ Operational' : '❌ Offline'}\n[View Site](${WEBSITE_URL})\n\n`, 
                     inline: true 
@@ -60,16 +55,6 @@ client.once('ready', async () => {
                 { 
                     name: '**TEBEX STORE**', 
                     value: `${storeOnline ? '✅ Operational' : '❌ Offline'}\n[View Shop](${STORE_URL})\n\n`, 
-                    inline: true 
-                },
-                { 
-                    name: '**NEXT UPDATE**', 
-                    value: 'not scheduled\n\n', 
-                    inline: true 
-                },
-                { 
-                    name: '**UPTIME**', 
-                    value: 'Monitoring...\n\n', 
                     inline: true 
                 }
             )
