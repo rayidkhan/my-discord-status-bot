@@ -111,7 +111,8 @@ client.once('ready', async () => {
                 statusMessage = null; 
             });
         }
-    }, 600);
+    }, 60000);
 });
 
 client.login(process.env.DISCORD_TOKEN);
+
