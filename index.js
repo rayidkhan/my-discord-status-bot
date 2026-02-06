@@ -35,6 +35,9 @@ client.once('ready', async () => {
         
         // Use Discord's relative time format (shows "X minutes ago" for each viewer)
         const relativeTime = `<t:${unixTimestamp}:R>`;
+        
+        // Create message content with the timestamp
+        const messageContent = `**Status Updated** ${relativeTime}`;
 
         const statusEmbed = new EmbedBuilder()
             .setTitle('**VIPER DEVELOPMENT**')
@@ -53,11 +56,12 @@ client.once('ready', async () => {
             )
             .setColor(0x2f3136)
             .setFooter({ 
-                text: `Viper Development • Updated ${relativeTime}`
+                text: `Viper Development • Auto-updating every minute`
             });
 
         if (!statusMessage) {
             statusMessage = await channel.send({ 
+                content: messageContent,
                 embeds: [statusEmbed],
                 components: [
                     {
@@ -83,6 +87,7 @@ client.once('ready', async () => {
             });
         } else {
             await statusMessage.edit({ 
+                content: messageContent,
                 embeds: [statusEmbed],
                 components: [
                     {
