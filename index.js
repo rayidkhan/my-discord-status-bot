@@ -28,32 +28,106 @@ client.once('ready', async () => {
             if (resStore.status === 200) storeOnline = true;
         } catch (e) { storeOnline = false; }
 
+        const currentTime = new Date();
+        const formattedTime = currentTime.toLocaleString('en-US', {
+            month: 'numeric',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        }).replace(',', '');
+
         const statusEmbed = new EmbedBuilder()
-            .setTitle('🔷 VIPER DEVELOPMENT STATUS')
-            .setDescription('**Live System Monitoring**')
+            .setTitle('# VIPER DEVELOPMENT')
+            .setDescription(`**APP**\n${formattedTime}\n\n---\n\n`)
             .addFields(
                 { 
-                    name: '**📖 DOCUMENTATION**', 
-                    value: `${websiteOnline ? '✅ **OPERATIONAL**' : '❌ **OFFLINE**'}\n\n🔗 [Visit Site](${WEBSITE_URL})\n\n`, 
+                    name: '**VIPER DEVELOPMENT**', 
+                    value: '**Viper Development** - The ultimate development experience! 🎉 Dive into a world of custom documentation 🏷, exclusive resources 🛒, unique tools 📜, and an active development team 🚀 ensuring top-tier services. Start strong with our starter resources 🎁 and make your mark in development! 💪 Join now and BEAT THE ODDS! 😊\n\n---\n\n', 
+                    inline: false 
+                },
+                { 
+                    name: '**STATUS**', 
+                    value: `${websiteOnline && storeOnline ? '✅ **Online**' : '❌ **Offline**'}\n\n`, 
                     inline: true 
                 },
                 { 
-                    name: '**🛒 TEBEX STORE**', 
-                    value: `${storeOnline ? '✅ **OPERATIONAL**' : '❌ **OFFLINE**'}\n\n🔗 [Visit Shop](${STORE_URL})\n\n`, 
+                    name: '**DOCUMENTATION**', 
+                    value: `${websiteOnline ? '✅ Operational' : '❌ Offline'}\n[View Site](${WEBSITE_URL})\n\n`, 
+                    inline: true 
+                },
+                { 
+                    name: '**TEBEX STORE**', 
+                    value: `${storeOnline ? '✅ Operational' : '❌ Offline'}\n[View Shop](${STORE_URL})\n\n`, 
+                    inline: true 
+                },
+                { 
+                    name: '**NEXT UPDATE**', 
+                    value: 'not scheduled\n\n', 
+                    inline: true 
+                },
+                { 
+                    name: '**UPTIME**', 
+                    value: 'Monitoring...\n\n', 
                     inline: true 
                 }
             )
-            .setColor(websiteOnline && storeOnline ? 0x00FF00 : 0xFF0000) // Green if all up, Red if any down
-            .setThumbnail('https://i.imgur.com/your-logo-url.png') // Add your logo URL here
+            .setColor(0x2f3136)
             .setFooter({ 
-                text: '🔄 Status updates every 60 seconds • Viper Development' 
-            })
-            .setTimestamp();
+                text: `Viper Development • Updated every minute • ${currentTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}`
+            });
 
         if (!statusMessage) {
-            statusMessage = await channel.send({ embeds: [statusEmbed] });
+            statusMessage = await channel.send({ 
+                embeds: [statusEmbed],
+                components: [
+                    {
+                        type: 1,
+                        components: [
+                            {
+                                type: 2,
+                                style: 5,
+                                label: 'Documentation',
+                                url: WEBSITE_URL,
+                                emoji: '📖'
+                            },
+                            {
+                                type: 2,
+                                style: 5,
+                                label: 'Store',
+                                url: STORE_URL,
+                                emoji: '🛒'
+                            }
+                        ]
+                    }
+                ]
+            });
         } else {
-            await statusMessage.edit({ embeds: [statusEmbed] }).catch(() => {
+            await statusMessage.edit({ 
+                embeds: [statusEmbed],
+                components: [
+                    {
+                        type: 1,
+                        components: [
+                            {
+                                type: 2,
+                                style: 5,
+                                label: 'Documentation',
+                                url: WEBSITE_URL,
+                                emoji: '📖'
+                            },
+                            {
+                                type: 2,
+                                style: 5,
+                                label: 'Store',
+                                url: STORE_URL,
+                                emoji: '🛒'
+                            }
+                        ]
+                    }
+                ]
+            }).catch(() => {
                 statusMessage = null; 
             });
         }
