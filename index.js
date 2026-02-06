@@ -43,12 +43,12 @@ client.once('ready', async () => {
             .setDescription('**Just code that works**')
             .addFields(
                 { 
-                    name: '**DOCUMENTATION**', 
+                    name: '>DOCUMENTATION', 
                     value: `${websiteOnline ? '```🟢 Operational```' : '```🔴 Offline```'}\n[View Site](${WEBSITE_URL})\n\n`, 
                     inline: true 
                 },
                 { 
-                    name: '**TEBEX STORE**', 
+                    name: '>TEBEX STORE', 
                     value: `${storeOnline ? '```🟢 Operational```' : '```🔴 Offline```'}\n[View Shop](${STORE_URL})\n\n`, 
                     inline: true 
                 }
