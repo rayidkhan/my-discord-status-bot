@@ -29,14 +29,12 @@ client.once('ready', async () => {
         } catch (e) { storeOnline = false; }
 
         const currentTime = new Date();
-        const formattedTime = currentTime.toLocaleString('en-US', {
-            month: 'numeric',
-            day: 'numeric',
-            year: 'numeric',
-            hour: 'numeric',
-            minute: '2-digit',
-            hour12: true
-        }).replace(',', '');
+        
+        // Get Unix timestamp in seconds
+        const unixTimestamp = Math.floor(currentTime.getTime() / 1000);
+        
+        // Use Discord's relative time format (shows "X minutes ago" for each viewer)
+        const relativeTime = `<t:${unixTimestamp}:R>`;
 
         const statusEmbed = new EmbedBuilder()
             .setTitle('**VIPER DEVELOPMENT**')
@@ -55,7 +53,7 @@ client.once('ready', async () => {
             )
             .setColor(0x2f3136)
             .setFooter({ 
-                text: `Viper Development • Updated every minute • ${currentTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}`
+                text: `Viper Development • Updated ${relativeTime}`
             });
 
         if (!statusMessage) {
@@ -115,4 +113,3 @@ client.once('ready', async () => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
-
