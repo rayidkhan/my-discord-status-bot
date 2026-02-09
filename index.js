@@ -5,8 +5,8 @@ const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] 
 });
 
-const WEBSITE_URL = 'https://viper-development-1.gitbook.io/viper-development-docs/'; 
-const STORE_URL = 'https://viper-development.tebex.io/';
+const WEBSITE_URL = process.env.WEBSITE_URL;
+const STORE_URL = process.env.STORE_URL;
 const CHANNEL_ID = process.env.CHANNEL_ID;
 let statusMessage = null; 
 
@@ -118,3 +118,4 @@ client.once('ready', async () => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
+
