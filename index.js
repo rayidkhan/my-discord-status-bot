@@ -56,8 +56,9 @@ client.once('ready', async () => {
             )
             .setColor(0x2f3136)
             .setFooter({ 
-                text: `Viper Development • Auto-updating every minute`
-            });
+                text: `Viper Development • Auto-updating every minute`,
+                iconURL: 'https://r2.fivemanage.com/u0iG0xPG2qnm3Ts9pqtXo/vp-logo.png'
+            })
 
         if (!statusMessage) {
             statusMessage = await channel.send({ 
