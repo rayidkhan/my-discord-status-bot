@@ -10,11 +10,11 @@ const STORE_URL = process.env.STORE_URL;
 const CHANNEL_ID = process.env.CHANNEL_ID;
 let statusMessage = null; 
 
-client.once('ready', async () => {
+client.once('clientReady', async () => {
     console.log(`✅ Viper Status Monitor Active`);
     const channel = await client.channels.fetch(CHANNEL_ID);
 
-    setInterval(async () => {
+    async function updateStatus() {
         let websiteOnline = false;
         let storeOnline = false;
 
@@ -115,8 +115,10 @@ client.once('ready', async () => {
                 statusMessage = null; 
             });
         }
-    }, 60000);
+    }
+
+    await updateStatus();
+    setInterval(updateStatus, 60000);
 });
 
 client.login(process.env.DISCORD_TOKEN);
-
